@@ -1,16 +1,13 @@
 //
-//  ProfileView.swift
+//  CurrentUserProfileView.swift
 //  InstagramClone
 //
-//  Created by Long Tran M2 on 20/2/24.
+//  Created by Long Tran M2 on 26/2/24.
 //
 
 import SwiftUI
 
-struct ProfileView: View {
-    
-    let user: User
-    
+struct CurrentUserProfileView: View {
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 1),
         .init(.flexible(), spacing: 1),
@@ -18,7 +15,7 @@ struct ProfileView: View {
     ]
     
     var body: some View {
-        //NavigationStack{
+        NavigationStack{
             ScrollView{
                 VStack {
                     // HEADER
@@ -26,7 +23,7 @@ struct ProfileView: View {
                         
                         // pic and stat
                         HStack {
-                            Image(user.profileImageUrl ?? "")
+                            Image("doremon")
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: 80, height: 80)
@@ -46,16 +43,12 @@ struct ProfileView: View {
                         
                         // name and bio
                         VStack(alignment: .leading) {
-                            if let fullname = user.fullname{
-                                Text(fullname)
-                                    .font(.footnote)
-                                    .fontWeight(.semibold)
-                            }
+                            Text("Long Tran")
+                                .font(.footnote)
+                                .fontWeight(.semibold)
                             
-                            if let bio = user.bio{
-                                Text(bio)
-                                    .font(.footnote)
-                            }
+                            Text("Wakanda Forever")
+                                .font(.footnote)
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal)
@@ -91,10 +84,20 @@ struct ProfileView: View {
             }
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
-
+            .toolbar(content: {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(action: {
+                        
+                    }, label: {
+                        Image(systemName: "line.3.horizontal")
+                            .foregroundStyle(.black)
+                    })
+                }
+            })
+        }
     }
 }
 
 #Preview {
-    ProfileView(user: User.MOCK_USERS[0])
+    CurrentUserProfileView()
 }

@@ -14,72 +14,21 @@ struct CurrentUserProfileView: View {
         .init(.flexible(), spacing: 1)
     ]
     
+    let user: User
+    
+    var posts: [Post] {
+        return Post.MOCK_POSTS.filter({$0.user?.username == user.username})
+    }
+    
     var body: some View {
         NavigationStack{
             ScrollView{
                 VStack {
                     // HEADER
-                    VStack(spacing: 12) {
-                        
-                        // pic and stat
-                        HStack {
-                            Image("doremon")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 80, height: 80)
-                                .clipShape(Circle())
-                            
-                            Spacer()
-                            
-                            HStack(spacing: 8){
-                                UserStatView(value: 3, title: "Posts")
-                                
-                                UserStatView(value: 12, title: "Followers")
-                                
-                                UserStatView(value: 3, title: "Following")
-                            }
-                        }
-                        .padding(.horizontal)
-                        
-                        // name and bio
-                        VStack(alignment: .leading) {
-                            Text("Long Tran")
-                                .font(.footnote)
-                                .fontWeight(.semibold)
-                            
-                            Text("Wakanda Forever")
-                                .font(.footnote)
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                        
-                        // action button
-                        Button(action: {}, label: {
-                            Text("Edit Profile")
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .frame(width: 360, height: 32 )
-                                .foregroundStyle(.black)
-                                .overlay(RoundedRectangle(cornerRadius: 6).stroke(.gray, lineWidth: 1))
-                        })
-                        
-                        Divider()
-                    }
+                    ProfileHeaderView(user: user)
                     
                     // POST GRID VIEW
-                    LazyVGrid(columns: gridItems, spacing: 1 ,content: {
-                        Image("doremon")
-                            .resizable()
-                            .scaledToFit()
-                        
-                        Image("doremon1")
-                            .resizable()
-                            .scaledToFit()
-                        
-                        Image("doremon1")
-                            .resizable()
-                            .scaledToFit()
-                    })
+                    PostGridView(posts: posts)
                 }
             }
             .navigationTitle("Profile")
@@ -99,5 +48,5 @@ struct CurrentUserProfileView: View {
 }
 
 #Preview {
-    CurrentUserProfileView()
+    CurrentUserProfileView(user: User.MOCK_USERS[0])
 }
